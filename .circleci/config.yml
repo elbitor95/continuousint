@@ -5,27 +5,28 @@ workflows:
   build:
     jobs:
       - build:
-          filters:
-            branches:
-              only:
-                - main
-      
+        filters:
+          branches:
+            only:
+              - main
+
 jobs:
   build:
     working_directory: ~/ExampleApplication
     docker:
       - image: circleci/node:10.16.3
     steps:
-      -checkout
-      -run:
+      - checkout
+      - run:
           name: update-npm
           command: 'sudo npm install -g npm@5'
-        -resote_cache:
-          key:dependency-cache-{{ checksum "package-lock.json" }}
-        -run:
+      - restore_cache:
+          key: dependency-cache-{{ checksum “package-lock. json" }}
+      - run:
           name: install-npm
           command: npm install
-        -save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - save_cache:
+          key: dependency-cache-{{ checksum “package-lock. json" }}
           paths:
-            - ./node_modules
+          - ./node_modules
+
